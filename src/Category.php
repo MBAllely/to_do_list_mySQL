@@ -27,14 +27,30 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO categories (name) VALUES ('{$this->getName()}')");
-            $this->id= $GLOBALS['DB']->lastInsertId();
+            $GLOBALS['DB']->exec("INSERT INTO categories (name) VALUES ('{$this->getName()}')"); //Adds names into categories table
+
+            $this->id = $GLOBALS['DB']->lastInsertId(); //reassigns id to equal the id of the last thing insterted into the database(?)
         }
 
-        static function getAll()
+        function getTasks()
         {
-            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories;");
-            $categories = array();
+            $tasks = [];
+            $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE category_id = {$this->getId()};"); //grabs task objects from DB task table
+            foreach($returned_tasks as $task) {
+                $description = $task['description']; //grabs description of each task
+                $due_date = $task['due_date'];
+                $id = $task['id']; //grabs id of each task
+                $category_id = $task['category_id']; //grabs category_id of each task
+                $new_task = new Task($description, $due_date, $id, $category_id); //intantiates a new Task with the arguments $description, $id, and $category_id
+                array_push($tasks, $new_task); //pushes each new intatiation into $tasks array
+            }
+            return $tasks; //returns array of $tasks from database
+        }
+
+        static function getAll() //gets all Category objects
+        {
+            $returned_categories = $GLOBALS['DB']->query("SELECT * FROM categories;"); //returns everything in the categories table
+            $categories = [];
             foreach($returned_categories as $category) {
                 $name = $category['name'];
                 $id = $category['id'];

@@ -7,14 +7,18 @@
   <body>
     <h1>To Do List</h1>
 
-    {% if tasks is not empty %} <!--if statement-->
+    {% if tasks is not empty %}
         <p>Here are all your tasks: </p>
         <ul>
-          {% for task in tasks %}<!--for loop-->
+          {% for task in tasks %}
               <li>{{ task.getDescription }}</li>
           {% endfor %}
         </ul>
+    {% else %}
+        <p>PRint this please</p>
     {% endif %}
+
+    <h4>Add a task</h4>
 
     <form action='/tasks' method='post'>
         <label for='description'>Task Description</label>
@@ -22,8 +26,14 @@
 
         <button type='submit'>Add task</button>
     </form>
+
     <form action='/delete_tasks' method='post'>
-        <button type='submit'>Delete All</button>
+        <button type='submit'>Clear</button>
     </form>
+    <p>
+        uhhh
+    </p>
+
+    <p><a href="/">Home</a></p>
   </body>
 </html>
