@@ -1,6 +1,6 @@
 # To Do List
 
-#### By Marika Allely and Jon Sweeney
+#### By Marika Allely
 
 ## Description
 
